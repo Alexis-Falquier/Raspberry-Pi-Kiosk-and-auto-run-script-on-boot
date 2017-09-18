@@ -1,4 +1,4 @@
-# Raspberry-Pi-Kiosk-and-auto-run-script-on-boot
+# Raspberry Pi Kiosk and auto run script on boot
 
 Set up your pi as a kiosk for your business. Follow these steps to have a pi automatically boot up and open a desired website in kiosk mode, no mouse no splash no error messages on boot up.
 
