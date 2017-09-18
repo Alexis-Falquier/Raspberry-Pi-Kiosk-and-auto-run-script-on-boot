@@ -1,0 +1,54 @@
+Raspberry Pi Kiosk / Auto run script on boot
+
+Set up (Ignore if you have already set up your pi):
+•	Format SD Card with SD Formatter 4.0 https://www.sdcard.org/downloads/formatter_4/index.html 
+•	Download Noobs (Download zip) https://www.raspberrypi.org/downloads/noobs/ 
+•	Extract files into formatted SD card
+•	Insert SD card into raspberry pi and connect to power (You will need a keyboard, mouse, and monitor plugged into the pi for everything continuing from this point)
+•	Startup Screen, click on NOOBS then install
+•	Once in the UI connect to WIFI
+•	Go to applications menu (top right)
+-Preferences
+-Raspberry Pi Configuration
+-System:
+-check “Wait for Network”
+-Disable “Splash Screen”
+-Set Resolution to 1920*1080
+-Click ok on both windows, and yes when prompted to reboot
+•	Raspberry Pi is now set up
+
+Installation of relevant software: 
+(everything in command prompt can be done through SSH if necessary)
+install pip (python installer):
+•	In command prompt type the following:
+•	sudo apt-get install python3-pip
+install unclutter: 
+(to hide mouse)
+•	In command prompt type in the following:
+•	sudo apt-get install unclutter
+
+Open website in Kiosk mode on startup:
+•	Open terminal
+•	Edit startup options by typing in: 
+•	nano .config/lxsession/LXDE-pi/autostart
+•	Add # in front of “@xscreensaver -no-splash” to disable screensaver
+•	Below that add :
+@xset s off
+@xset -dpms
+@xset s noblank 
+@unclutter -idle 5
+(each in a separate line) this will disable power settings so pi wont sleep due to inactivity, as well as hide the mouse.
+•	Finally add the following but replace http://www.website.com with the desired URL
+@/usr/bin/chromium-browser --noerordialogs --disable-session-crashed-bubble --disable-infobars --kiosk http://www.website.com
+•	CTRL+O then ENTER to save
+•	CTRL+X to exit
+
+***If you want to run a script on startup instead
+•	Simply open command prompt and edit the same file as described before:
+nano .config/lxsession/LXDE-pi/autostart
+•	at the end of the file add the destination of the script you wish to run eg:
+@python3 /home/pi/Desktop/MyScript.py
+
+Pi should now be fully functional. To test open terminal and type:
+sudo reboot
+Pi should now open boot up, and open the browser on desired URL, screen should be in kiosk mode and mouse hidden and will not go to sleep or screensaver. Alternatively it should now run your script after startup.
